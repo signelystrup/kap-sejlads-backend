@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -23,8 +24,14 @@ public class BoatController {
     }
 
     @GetMapping("/{id}")
-    public void getBoatById(@PathVariable long id){
+    public ResponseEntity<BoatRequestDTO> getBoatById(@PathVariable long id){
+        BoatRequestDTO boat = boatService.getBoatById(id);
 
+        if (boat == null){
+            return new ResponseEntity<>(boat, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(boat, HttpStatus.OK);
     }
 
     @PostMapping

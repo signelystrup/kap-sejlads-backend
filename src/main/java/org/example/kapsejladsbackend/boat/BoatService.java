@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,13 @@ public class BoatService {
                        .collect(Collectors.toSet());
     }
 
-    public void getBoatById( long id){
+    public BoatRequestDTO getBoatById( long id){
+        Optional<Boat> boat = boatRepository.findById(id);
+        if (boat.isPresent()){
+            return BoatRequestDTO.boatToRequestDTO(boat.get());
+        }
+
+        return null;
 
     }
 
