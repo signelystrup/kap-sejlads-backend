@@ -25,7 +25,7 @@ public class Boat {
     private Set<Participant> participants;
 
     //no id
-    public Boat(Set<Participant> participants, BoatType boatType) {
+    public Boat(BoatType boatType, Set<Participant> participants) {
         this.participants = participants;
         this.boatType = boatType;
     }

@@ -31,18 +31,31 @@ public class BoatService {
         }
 
         return null;
-
     }
 
-    public void addBoat(Boat boat){
-
+    public BoatRequestDTO addBoat(BoatResponseDTO boatResponseDTO){
+        return BoatRequestDTO.boatToRequestDTO(boatRepository.save(
+                BoatResponseDTO.boatFromResponseDTO(boatResponseDTO))
+        );
     }
 
-    public void updateBoat(long id, Boat boat){
+    public BoatRequestDTO updateBoat(long id, BoatResponseDTO boatResponseDTO){
+        Boat boat = BoatResponseDTO.boatFromResponseDTO(boatResponseDTO);
 
+        if (boatRepository.findById(id).isPresent()){
+            boat.setId(id);
+        }
+
+        return BoatRequestDTO.boatToRequestDTO(boatRepository.save(boat));
     }
 
-    public void deleteBoat(long id){
+    public boolean deleteBoat(long id){
+        Optional <Boat> boat = boatRepository.findById(id);
+        if (boat.isPresent()){
+            boatRepository.delete(boat.get());
+            return true;
+        }
+        return false;
 
     }
 }

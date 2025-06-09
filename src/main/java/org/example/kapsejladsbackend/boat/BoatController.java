@@ -35,18 +35,30 @@ public class BoatController {
     }
 
     @PostMapping
-    public void addBoat(@RequestBody Boat boat){
-
+    public ResponseEntity<BoatRequestDTO> addBoat(@RequestBody BoatResponseDTO boatResponseDTO){
+        return new ResponseEntity<>(boatService.addBoat(boatResponseDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void updateBoat(@PathVariable long id, @RequestBody Boat boat){
+    public ResponseEntity<BoatRequestDTO> updateBoat(@PathVariable long id, @RequestBody BoatResponseDTO boatResponseDTO){
+        BoatRequestDTO boatRequestDTO = boatService.updateBoat(id, boatResponseDTO);
+
+        if (getBoatById(id) == null){
+            return new ResponseEntity<>(boatRequestDTO, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>(boatRequestDTO, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBoat(@PathVariable long id){
+    public HttpStatus deleteBoat(@PathVariable long id){
+        boolean deleted = boatService.deleteBoat(id);
+        if (deleted){
+            return HttpStatus.OK;
+        }
 
+        return HttpStatus.NOT_FOUND;
     }
 
 }
