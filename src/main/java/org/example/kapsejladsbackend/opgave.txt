@@ -1,0 +1,22 @@
+Hver onsdag i perioden 1. maj til 1. oktober afvikles der kapsejlads, 1 for hver af de 3 bådtyper.
+Kapsejladserne: Der er i alt 3 gange antallet af onsdage i perioden fra 1. maj til 1. oktober 2023.
+
+        For hver bådtype tildeles alle både points efter hver sejlads
+        afhængig af deres placering i dagens sejlads.
+
+
+3 bådtyper: Længere end 40fod, mindre end 25fod og 25-40fod.
+
+
+Vinderen af hver kapsejlads får 1 point, nummer 2 får 2point osv
+    Den samlede vinder når sæsonen er forbi, er den båd med færrest point.
+
+    Tilføj mulighed for at indtaste point til de enkelte deltagere for hver sejlads.
+
+
+
+DOMÆNER:
+Både (+ enum: typer)
+Sejlads
+Deltager
+
