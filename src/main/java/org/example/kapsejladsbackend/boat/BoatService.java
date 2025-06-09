@@ -1,6 +1,10 @@
 package org.example.kapsejladsbackend.boat;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Service
 public class BoatService {
@@ -8,5 +12,25 @@ public class BoatService {
 
     public BoatService(BoatRepository boatRepository){
         this.boatRepository = boatRepository;
+    }
+
+    public void getAllBoats(){
+
+    }
+
+    public void getBoatById( long id){
+
+    }
+
+    public void addBoat(Boat boat){
+
+    }
+
+    public void updateBoat(long id, Boat boat){
+
+    }
+
+    public void deleteBoat(long id){
+
     }
 }

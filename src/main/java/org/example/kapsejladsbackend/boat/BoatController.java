@@ -1,6 +1,9 @@
 package org.example.kapsejladsbackend.boat;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/boat")
@@ -12,8 +15,8 @@ public class BoatController {
     }
 
     @GetMapping("/all")
-    public void getAllBoats(){
-
+    public ResponseEntity<Set<Boat>> getAllBoats(){
+        Set<Boat> boats = boatService.getAllBoats();
     }
 
     @GetMapping("/{id}")
