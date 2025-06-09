@@ -4,7 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BoatService {
@@ -14,8 +16,11 @@ public class BoatService {
         this.boatRepository = boatRepository;
     }
 
-    public void getAllBoats(){
-
+    public Set<BoatRequestDTO> getAllBoats(){
+        return boatRepository.findAll()
+                       .stream()
+                       .map(BoatRequestDTO::boatToRequestDTO)
+                       .collect(Collectors.toSet());
     }
 
     public void getBoatById( long id){

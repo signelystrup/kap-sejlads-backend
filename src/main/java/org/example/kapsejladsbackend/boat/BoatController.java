@@ -1,5 +1,6 @@
 package org.example.kapsejladsbackend.boat;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,10 @@ public class BoatController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<Boat>> getAllBoats(){
-        Set<Boat> boats = boatService.getAllBoats();
+    public ResponseEntity<Set<BoatRequestDTO>> getAllBoats(){
+        Set<BoatRequestDTO> boats = boatService.getAllBoats();
+
+        return new ResponseEntity<>(boats, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
