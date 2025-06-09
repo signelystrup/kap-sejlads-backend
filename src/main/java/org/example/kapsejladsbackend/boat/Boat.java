@@ -23,4 +23,10 @@ public class Boat {
 
     @ManyToMany
     private Set<Participant> participants;
+
+    //no id
+    public Boat(Set<Participant> participants, BoatType boatType) {
+        this.participants = participants;
+        this.boatType = boatType;
+    }
 }
