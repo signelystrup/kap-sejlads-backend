@@ -27,38 +27,44 @@ public class BoatController {
     public ResponseEntity<BoatRequestDTO> getBoatById(@PathVariable long id){
         BoatRequestDTO boat = boatService.getBoatById(id);
 
-        if (boat == null){
-            return new ResponseEntity<>(boat, HttpStatus.NOT_FOUND);
+        if (boat == null){ //if no boat with id found, throw 404
+            return new ResponseEntity<>(boat,
+                                        HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(boat, HttpStatus.OK);
+        return new ResponseEntity<>(boat, //return boatDTO and 200 ok.
+                                    HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<BoatRequestDTO> addBoat(@RequestBody BoatResponseDTO boatResponseDTO){
-        return new ResponseEntity<>(boatService.addBoat(boatResponseDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(boatService.addBoat(boatResponseDTO),
+                                    HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BoatRequestDTO> updateBoat(@PathVariable long id, @RequestBody BoatResponseDTO boatResponseDTO){
-        BoatRequestDTO boatRequestDTO = boatService.updateBoat(id, boatResponseDTO);
+        BoatRequestDTO boatRequestDTO = boatService.updateBoat(id, boatResponseDTO); //update boat
 
-        if (getBoatById(id) == null){
-            return new ResponseEntity<>(boatRequestDTO, HttpStatus.CREATED);
+        if (getBoatById(id) == null){ //if no boat with id, return 201
+            return new ResponseEntity<>(boatRequestDTO,
+                                        HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>(boatRequestDTO, HttpStatus.OK);
+        return new ResponseEntity<>(boatRequestDTO, //if boat updated (exists) return 200
+                                    HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteBoat(@PathVariable long id){
+    public ResponseEntity deleteBoat(@PathVariable long id){
         boolean deleted = boatService.deleteBoat(id);
+        
         if (deleted){
-            return HttpStatus.OK;
+            return new ResponseEntity(HttpStatus.OK);
         }
 
-        return HttpStatus.NOT_FOUND;
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
 }

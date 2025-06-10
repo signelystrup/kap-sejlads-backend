@@ -40,7 +40,7 @@ public class BoatService {
     }
 
     public BoatRequestDTO updateBoat(long id, BoatResponseDTO boatResponseDTO){
-        Boat boat = BoatResponseDTO.boatFromResponseDTO(boatResponseDTO);
+        Boat boat = BoatResponseDTO.boatFromResponseDTO(boatResponseDTO); //create boat from response dto
 
         if (boatRepository.findById(id).isPresent()){
             boat.setId(id);
@@ -51,11 +51,11 @@ public class BoatService {
 
     public boolean deleteBoat(long id){
         Optional <Boat> boat = boatRepository.findById(id);
+
         if (boat.isPresent()){
             boatRepository.delete(boat.get());
             return true;
         }
         return false;
-
     }
 }
