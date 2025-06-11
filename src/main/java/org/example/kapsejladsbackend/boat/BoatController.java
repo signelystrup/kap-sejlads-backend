@@ -59,7 +59,7 @@ public class BoatController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBoat(@PathVariable long id){
         boolean deleted = boatService.deleteBoat(id);
-        
+
         if (deleted){
             return new ResponseEntity(HttpStatus.OK);
         }
