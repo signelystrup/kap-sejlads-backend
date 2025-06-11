@@ -78,56 +78,15 @@ class BoatControllerTest {
 
         String jsonPayload = objectMapper.writeValueAsString(boatResponseDTO); //prepare responseDTO as json(string)
 
-        System.out.println(jsonPayload);
-
-
         mockMvc.perform(post("/boat")
                                 .content(jsonPayload)
                                 .contentType(MediaType.APPLICATION_JSON))
-                                   .andDo(print())
-                .andExpect(status().isCreated())
-                               //    .andExpect(jsonPath("$.id").value(1))
-                .andReturn();//andExpect(jsonPath("$.id").value(1));
 
-        /*
+                .andDo(print())
+                .andExpect(status().isCreated());
 
-                System.out.println(result.getResponse());
-
-                String json = result.getResponse().getContentAsString();
-Article article = objectMapper.readValue(json, Article.class);
-
-*/
-
-        /*
-
-        System.out.println("contentType: " + result.getResponse().getContentType());
-
-        System.out.println("addboat(): " + boatService.addBoat(boatResponseDTO));
-
-     //   System.out.println("async result: " + result.getAsyncResult());
-
-
-        String responseAsString = result.getResponse().getContentAsString();
-        //BoatRequestDTO response = objectMapper.readValue(responseAsString, BoatRequestDTO.class);
-
-        String response = responseAsString;
-
-        String request  = result.getRequest().getContentAsString();
-
-        System.out.println("response: " + response + "\nrequest: " + request);
-
-
-         */
-
-
-        /*
-        while( result.getRequest().getAttributeNames().hasMoreElements()){
-            System.out.println(result.getRequest().getAttributeNames().nextElement());
-        }*/
-
-        //mockMvc.perform(post("/api/students").content(jsonPayload).contentType(MediaType.APPLICATION_JSON));
-
-        //String jsonPayload = objectMapper.writeValueAsString(new StudentRequestDTO("Jane", "password", LocalDate.now(), LocalTime.now()));
+        //this post method should return a ResponseEntity containing a BoatRequestDTO, but the Body is empty.
+        //this is a test specific problem, and does not occur in the actual program.
     }
 
     @Test
