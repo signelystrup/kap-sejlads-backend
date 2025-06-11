@@ -1,11 +1,12 @@
 package org.example.kapsejladsbackend.boat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.kapsejladsbackend.participant.Participant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,8 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,9 +29,16 @@ class BoatControllerTest {
     private MockMvc mockMvc;
 
     private Set<Participant> participants = new HashSet<>();
+    private BoatRequestDTO boatRequestDTO;
+    private BoatResponseDTO boatResponseDTO;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
+        boatRequestDTO = new BoatRequestDTO(1, BoatType.LESS_THAN_25_FEET, participants);
+        boatResponseDTO = new BoatResponseDTO(BoatType.BETWEEN_25_AND_40_FEET, participants);
+
         participants.add(new Participant());
         participants.add(new Participant());
 
@@ -39,9 +47,8 @@ class BoatControllerTest {
     @Test
     void getAllBoatsTest() throws Exception{
 
-        BoatRequestDTO boat = new BoatRequestDTO(1, BoatType.LESS_THAN_25_FEET, participants);
-
-        when(boatService.getAllBoats()).thenReturn(Set.of(boat));
+        //arrange
+        when(boatService.getAllBoats()).thenReturn(Set.of(boatRequestDTO));
 
         mockMvc.perform(get("/boat/all"))
                 .andExpect(status().isOk())
@@ -52,10 +59,24 @@ class BoatControllerTest {
 
     @Test
     void getBoatById() {
+
     }
 
     @Test
-    void addBoat() {
+    void addBoatTest() throws Exception{
+        when(boatService.addBoat(boatResponseDTO)).thenReturn(boatRequestDTO);
+
+        String jsonPayload = objectMapper.writeValueAsString(boatResponseDTO);
+
+        mockMvc.perform(post("/boat")
+                                .content(jsonPayload)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1));
+
+        //mockMvc.perform(post("/api/students").content(jsonPayload).contentType(MediaType.APPLICATION_JSON));
+
+        //String jsonPayload = objectMapper.writeValueAsString(new StudentRequestDTO("Jane", "password", LocalDate.now(), LocalTime.now()));
     }
 
     @Test
